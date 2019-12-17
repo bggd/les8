@@ -52,14 +52,18 @@ __declspec(dllexport)
 int
 luaopen_les8_c(lua_State* L)
 {
-  luaL_Reg les8[] = {
+ luaL_Reg les8[] = {
     {"init", les8c_init},
     {"shutdown", les8c_shutdown},
     {"update", les8c_update},
     {"capfps", les8c_capfps},
     {NULL, NULL}
   };
+#if LUA_VERSION_NUM < 502
+  luaL_register(L, "les8.c", les8);
+#else
   luaL_newlib(L, les8);
+#endif
   return 1;
 }
 
