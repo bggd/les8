@@ -52,7 +52,7 @@ __declspec(dllexport)
 int
 luaopen_les8_c(lua_State* L)
 {
- luaL_Reg les8[] = {
+  luaL_Reg les8[] = {
     {"init", les8c_init},
     {"shutdown", les8c_shutdown},
     {"update", les8c_update},
