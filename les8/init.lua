@@ -2,6 +2,7 @@ local c = require("les8.c")
 
 local les8 = {}
 
+les8.shader = require("les8.shader").shader
 
 function les8.init()
   c.init()
