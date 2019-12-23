@@ -5,7 +5,7 @@ extern "C" {
 }
 
 #include "../moge/cppes8/src/cppes8.hpp"
-#include "../moge/cppes8/src/shader.hpp"
+#include "../moge/cppes8/src/shader.cpp"
 
 #include <SDL.h>
 
@@ -67,22 +67,20 @@ les8c_shader_create(lua_State* L)
   shader_decl.num_array_of_input_layout = len / 3;
   shader_decl.vertex_shader = lua_tolstring(L, 2, &shader_decl.vertex_shader_len);
   shader_decl.pixel_shader = lua_tolstring(L, 3, &shader_decl.pixel_shader_len);
-  cppes8::shader::Shader shader = cppes8::shader::create(g_gamelib, shader_decl);
+  cppes8::shader::ShaderHandle handle = cppes8::shader::create(g_gamelib, shader_decl);
 
-  lua_pushlightuserdata(L, shader.input_layout);
-  lua_pushlightuserdata(L, shader.vertex_shader);
-  lua_pushlightuserdata(L, shader.pixel_shader);
-  return 3;
+  lua_pushinteger(L, handle.id);
+  lua_pushinteger(L, handle.generation);
+  return 2;
 }
 
 static int
 les8c_shader_destroy(lua_State* L)
 {
-  cppes8::shader::Shader shader;
-  shader.input_layout = lua_touserdata(L, 1);
-  shader.vertex_shader = lua_touserdata(L, 2);
-  shader.pixel_shader = lua_touserdata(L, 3);
-  cppes8::shader::destroy(g_gamelib, shader);
+  cppes8::shader::ShaderHandle handle;
+  handle.id = luaL_checkinteger(L, 1);
+  handle.generation = luaL_checkinteger(L, 2);
+  cppes8::shader::destroy(g_gamelib, handle);
   return 0;
 }
 

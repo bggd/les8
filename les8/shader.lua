@@ -29,21 +29,17 @@ function les8.shader.create(shader_decl)
     table.insert(flatten_layout, input.num_float)
   end
 
-  local input_layout,
-        vertex_shader,
-        pixel_shader = c.shader_create(flatten_layout,
-                                       shader_decl.vertex_shader,
-                                       shader_decl.pixel_shader)
+  local id,
+        generation
+        = c.shader_create(flatten_layout,
+                          shader_decl.vertex_shader,
+                          shader_decl.pixel_shader)
 
-  return {input_layout, vertex_shader, pixel_shader}
+  return {id, generation}
 end
 
 function les8.shader.destroy(shader)
-  assert(type(shader[1]) == 'userdata')
-  assert(type(shader[2]) == 'userdata')
-  assert(type(shader[3]) == 'userdata')
-
-  c.shader_destroy(shader[1], shader[2], shader[3])
+  c.shader_destroy(shader[1], shader[2])
 end
 
 return les8
