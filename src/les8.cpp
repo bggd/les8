@@ -84,6 +84,48 @@ les8c_shader_destroy(lua_State* L)
   return 0;
 }
 
+static int
+les8c_gfx_clear(lua_State* L)
+{
+  cppes8::gfx::clear(g_gamelib, 0.0f, 0.0f, 0.0f, 1.0);
+  return 0;
+}
+
+static int
+les8c_gfx_present(lua_State* L)
+{
+  cppes8::gfx::present(g_gamelib);
+  return 0;
+}
+
+static int
+les8c_gfx_set_shader(lua_State* L)
+{
+  cppes8::shader::ShaderHandle handle;
+  handle.id = luaL_checkinteger(L, 1);
+  handle.generation = luaL_checkinteger(L, 2);
+  cppes8::gfx::set_shader(g_gamelib, handle);
+  return 0;
+}
+
+static int
+les8c_gfx_draw_triangles(lua_State* L)
+{
+  static float vertices[CPPES8_CONFIG_MAX_VERTICES];
+
+  size_t len = lua_rawlen(L, 1);
+
+  for (size_t i = 0; i < len; ++i) {
+    lua_rawgeti(L, 1, i + 1);
+    vertices[i] = (float)lua_tonumber(L, -1);
+    lua_pop(L, 1);
+  }
+
+  cppes8::gfx::draw_triangles(g_gamelib, vertices, len);
+
+  return 0;
+}
+
 extern "C" {
 #ifdef _WIN32
 __declspec(dllexport)
@@ -98,6 +140,10 @@ luaopen_les8_c(lua_State* L)
     {"capfps", les8c_capfps},
     {"shader_create", les8c_shader_create},
     {"shader_destroy", les8c_shader_destroy},
+    {"gfx_clear", les8c_gfx_clear},
+    {"gfx_present", les8c_gfx_present},
+    {"gfx_set_shader", les8c_gfx_set_shader},
+    {"gfx_draw_triangles", les8c_gfx_draw_triangles},
     {NULL, NULL}
   };
 #if LUA_VERSION_NUM < 502
