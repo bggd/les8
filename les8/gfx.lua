@@ -4,8 +4,12 @@ local les8 = {}
 
 les8.gfx = {}
 
-function les8.gfx.clear()
-  c.gfx_clear()
+function les8.gfx.clear(R, G, B, A)
+  assert(R >= 0.0 and R <= 1.0)
+  assert(G >= 0.0 and G <= 1.0)
+  assert(B >= 0.0 and B <= 1.0)
+  assert(A >= 0.0 and A <= 1.0)
+  c.gfx_clear(R, G, B, A)
 end
 
 function les8.gfx.present()

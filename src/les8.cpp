@@ -87,7 +87,12 @@ les8c_shader_destroy(lua_State* L)
 static int
 les8c_gfx_clear(lua_State* L)
 {
-  cppes8::gfx::clear(g_gamelib, 0.0f, 0.0f, 0.0f, 1.0);
+  float R, G, B, A;
+  R = luaL_checknumber(L, 1);
+  G = luaL_checknumber(L, 2);
+  B = luaL_checknumber(L, 3);
+  A = luaL_checknumber(L, 4);
+  cppes8::gfx::clear(g_gamelib, R, G, B, A);
   return 0;
 }
 
@@ -114,10 +119,11 @@ les8c_gfx_draw_triangles(lua_State* L)
   static float vertices[CPPES8_CONFIG_MAX_VERTICES];
 
   size_t len = lua_rawlen(L, 1);
+  assert(len < CPPES8_CONFIG_MAX_VERTICES);
 
   for (size_t i = 0; i < len; ++i) {
     lua_rawgeti(L, 1, i + 1);
-    vertices[i] = (float)lua_tonumber(L, -1);
+    vertices[i] = lua_tonumber(L, -1);
     lua_pop(L, 1);
   }
 
