@@ -114,6 +114,23 @@ les8c_gfx_set_shader(lua_State* L)
 }
 
 static int
+les8c_gfx_set_projection_matrix(lua_State* L)
+{
+  float matrix[16];
+  size_t len = lua_rawlen(L, 1);
+
+  for (size_t i = 0; i < len; ++i) {
+    lua_rawgeti(L, 1, i + 1);
+    matrix[i] = lua_tonumber(L, -1);
+    lua_pop(L, 1);
+  }
+
+  cppes8::gfx::set_projection_matrix(g_gamelib, matrix);
+
+  return 0;
+}
+
+static int
 les8c_gfx_draw_triangles(lua_State* L)
 {
   static float vertices[CPPES8_CONFIG_MAX_VERTICES];
@@ -149,6 +166,7 @@ luaopen_les8_c(lua_State* L)
     {"gfx_clear", les8c_gfx_clear},
     {"gfx_present", les8c_gfx_present},
     {"gfx_set_shader", les8c_gfx_set_shader},
+    {"gfx_set_projection_matrix", les8c_gfx_set_projection_matrix},
     {"gfx_draw_triangles", les8c_gfx_draw_triangles},
     {NULL, NULL}
   };
