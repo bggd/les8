@@ -105,7 +105,7 @@ end
 
 function mat4.ortho(left, right, bottom, top, near, far)
   local _11 = 2.0 / (right - left)
-  local _22 = 2.0 / (top - left)
+  local _22 = 2.0 / (top - bottom)
   local _33 = 1.0 / (far - near)
   local _41 = (left + right) / (left - right)
   local _42 = (top + bottom) / (bottom - top)
