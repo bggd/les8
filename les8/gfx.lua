@@ -20,6 +20,11 @@ function les8.gfx.set_shader(shader)
   c.gfx_set_shader(shader[1], shader[2])
 end
 
+function les8.gfx.set_projection_matrix(matrix)
+  assert(#matrix == 16)
+  c.gfx_set_projection_matrix(matrix)
+end
+
 function les8.gfx.draw_triangles(vertices)
   c.gfx_draw_triangles(vertices)
 end
