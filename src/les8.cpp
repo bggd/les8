@@ -6,6 +6,7 @@ extern "C" {
 
 #include "../moge/cppes8/src/cppes8.hpp"
 #include "../moge/cppes8/src/shader.cpp"
+#include "../moge/cppes8/src/texture.cpp"
 
 #include <SDL.h>
 
@@ -81,6 +82,32 @@ les8c_shader_destroy(lua_State* L)
   handle.id = luaL_checkinteger(L, 1);
   handle.generation = luaL_checkinteger(L, 2);
   cppes8::shader::destroy(g_gamelib, handle);
+  return 0;
+}
+
+static int
+les8c_texture_create(lua_State* L)
+{
+  cppes8::texture::TextureDecl tex_decl;
+
+  tex_decl.width = luaL_checkinteger(L, 1);
+  tex_decl.height = luaL_checkinteger(L, 2);
+  tex_decl.rgba = (const uint8_t*)luaL_checkstring(L, 3);
+
+  cppes8::texture::TextureHandle handle = cppes8::texture::create(g_gamelib, tex_decl);
+
+  lua_pushinteger(L, handle.id);
+  lua_pushinteger(L, handle.generation);
+  return 2;
+}
+
+static int
+les8c_texture_destroy(lua_State* L)
+{
+  cppes8::texture::TextureHandle handle;
+  handle.id = luaL_checkinteger(L, 1);
+  handle.generation = luaL_checkinteger(L, 2);
+  cppes8::texture::destroy(g_gamelib, handle);
   return 0;
 }
 
@@ -163,6 +190,8 @@ luaopen_les8_c(lua_State* L)
     {"capfps", les8c_capfps},
     {"shader_create", les8c_shader_create},
     {"shader_destroy", les8c_shader_destroy},
+    {"texture_create", les8c_texture_create},
+    {"texture_destroy", les8c_texture_destroy},
     {"gfx_clear", les8c_gfx_clear},
     {"gfx_present", les8c_gfx_present},
     {"gfx_set_shader", les8c_gfx_set_shader},
