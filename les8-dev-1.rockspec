@@ -25,6 +25,7 @@ build = {
     ["les8.vec3"] = "les8/vec3.lua",
     ["les8.mat3"] = "les8/mat3.lua",
     ["les8.mat4"] = "les8/mat4.lua",
+    ["les8.thirdparty"] = "les8/thirdparty.lua",
     ["les8.c"] = {
       sources = {"src/les8.cpp"},
       libraries = {"SDL2"}
