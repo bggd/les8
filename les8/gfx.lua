@@ -33,4 +33,4 @@ function les8.gfx.draw_triangles(vertices)
   c.gfx_draw_triangles(vertices)
 end
 
-return les8
+return les8.gfx

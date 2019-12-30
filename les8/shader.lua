@@ -42,4 +42,4 @@ function les8.shader.destroy(shader)
   c.shader_destroy(shader[1], shader[2])
 end
 
-return les8
+return les8.shader

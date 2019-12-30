@@ -28,4 +28,4 @@ function les8.texture.destroy(texture)
   c.texture_destroy(texture[1], texture[2])
 end
 
-return les8
+return les8.texture

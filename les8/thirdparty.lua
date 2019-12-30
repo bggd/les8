@@ -9,4 +9,4 @@ function les8.thirdparty.stbi_load_from_memory(buffer)
   return data, w, h, channels
 end
 
-return les8
+return les8.thirdparty
