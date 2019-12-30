@@ -20,6 +20,7 @@ build = {
   modules = {
     ["les8"] = "les8/init.lua",
     ["les8.shader"] = "les8/shader.lua",
+    ["les8.texture"] = "les8/texture.lua",
     ["les8.gfx"] = "les8/gfx.lua",
     ["les8.vec3"] = "les8/vec3.lua",
     ["les8.mat3"] = "les8/mat3.lua",

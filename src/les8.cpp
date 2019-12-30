@@ -1,3 +1,4 @@
+#include <stdint.h>
 extern "C" {
 #include <lua.h>
 #include <lualib.h>
@@ -7,6 +8,9 @@ extern "C" {
 #include "../moge/cppes8/src/cppes8.hpp"
 #include "../moge/cppes8/src/shader.cpp"
 #include "../moge/cppes8/src/texture.cpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "../thirdparty/stb/stb_image.h"
 
 #include <SDL.h>
 
@@ -53,7 +57,7 @@ les8c_shader_create(lua_State* L)
   cppes8::shader::InputLayout array_of_input_layout[8] = {};
   size_t len = lua_rawlen(L, 1);
   for (size_t i = 0; i < len; i += 3) {
-    cppes8::shader::InputLayout& input = array_of_input_layout[i];
+    cppes8::shader::InputLayout& input = array_of_input_layout[i / 3];
     lua_rawgeti(L, 1, i + 1);
     input.semantic_name = lua_tostring(L, -1);
     lua_rawgeti(L, 1, i + 2);
@@ -158,6 +162,16 @@ les8c_gfx_set_projection_matrix(lua_State* L)
 }
 
 static int
+les8c_gfx_set_texture(lua_State* L)
+{
+  cppes8::texture::TextureHandle handle;
+  handle.id = luaL_checkinteger(L, 1);
+  handle.generation = luaL_checkinteger(L, 2);
+  cppes8::gfx::set_texture(g_gamelib, handle);
+  return 0;
+}
+
+static int
 les8c_gfx_draw_triangles(lua_State* L)
 {
   static float vertices[CPPES8_CONFIG_MAX_VERTICES];
@@ -174,6 +188,24 @@ les8c_gfx_draw_triangles(lua_State* L)
   cppes8::gfx::draw_triangles(g_gamelib, vertices, len);
 
   return 0;
+}
+
+static int
+les8c_stbi_load_from_memory(lua_State* L)
+{
+  size_t len;
+  const uint8_t* buffer = (const uint8_t*)luaL_checklstring(L, 1, &len);
+  assert(len < INT32_MAX);
+
+  int x, y, c;
+  const char* decoded_data = (const char*)stbi_load_from_memory(buffer, len, &x, &y, &c, 0);
+
+  lua_pushlstring(L, decoded_data, sizeof(char) * x * y * c);
+  lua_pushinteger(L, x);
+  lua_pushinteger(L, y);
+  lua_pushinteger(L, c);
+
+  return 4;
 }
 
 extern "C" {
@@ -196,7 +228,9 @@ luaopen_les8_c(lua_State* L)
     {"gfx_present", les8c_gfx_present},
     {"gfx_set_shader", les8c_gfx_set_shader},
     {"gfx_set_projection_matrix", les8c_gfx_set_projection_matrix},
+    {"gfx_set_texture", les8c_gfx_set_texture},
     {"gfx_draw_triangles", les8c_gfx_draw_triangles},
+    {"stbi_load_from_memory", les8c_stbi_load_from_memory},
     {NULL, NULL}
   };
 #if LUA_VERSION_NUM < 502

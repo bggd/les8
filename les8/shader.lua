@@ -20,7 +20,7 @@ shader_decl = {
 
 function les8.shader.create(shader_decl)
   assert(#shader_decl.input_layout > 0)
-  assert(#shader_decl.input_layout < 8)
+  assert(#shader_decl.input_layout <= 8)
 
   local flatten_layout = {}
   for _, input in ipairs(shader_decl.input_layout) do

@@ -25,6 +25,10 @@ function les8.gfx.set_projection_matrix(matrix)
   c.gfx_set_projection_matrix(matrix)
 end
 
+function les8.gfx.set_texture(texture)
+  c.gfx_set_texture(texture[1], texture[2])
+end
+
 function les8.gfx.draw_triangles(vertices)
   c.gfx_draw_triangles(vertices)
 end
