@@ -208,6 +208,21 @@ les8c_stbi_load_from_memory(lua_State* L)
   return 4;
 }
 
+static int
+les8c_sdl2_get_keyboard_state(lua_State* L)
+{
+  const UINT8* state = SDL_GetKeyboardState(NULL);
+
+  size_t len = lua_rawlen(L, 1);
+
+  for (size_t i = 0; i < len; ++i) {
+    lua_pushboolean(L, state[i + 1]);
+    lua_rawseti(L, 1, i + 1);
+  }
+
+  return 1;
+}
+
 extern "C" {
 #ifdef _WIN32
 __declspec(dllexport)
@@ -231,6 +246,7 @@ luaopen_les8_c(lua_State* L)
     {"gfx_set_texture", les8c_gfx_set_texture},
     {"gfx_draw_triangles", les8c_gfx_draw_triangles},
     {"stbi_load_from_memory", les8c_stbi_load_from_memory},
+    {"sdl2_get_keyboard_state", les8c_sdl2_get_keyboard_state},
     {NULL, NULL}
   };
 #if LUA_VERSION_NUM < 502
