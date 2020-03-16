@@ -1,5 +1,9 @@
 local vec3 = {}
 
+function vec3.zero()
+  return {0.0, 0.0, 0.0}
+end
+
 function vec3.add(a, b)
   local v = {0.0, 0.0, 0.0}
   for i = 1, 3 do
