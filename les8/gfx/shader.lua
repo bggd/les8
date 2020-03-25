@@ -1,8 +1,8 @@
 local c = require("les8.c")
 
-local les8 = {}
+local gfx = {}
 
-les8.shader = {}
+gfx.shader = {}
 
 --[[
 shader_decl = {
@@ -18,7 +18,7 @@ shader_decl = {
 }
 --]]
 
-function les8.shader.create(shader_decl)
+function gfx.shader.create(shader_decl)
   assert(#shader_decl.input_layout > 0)
   assert(#shader_decl.input_layout <= 8)
 
@@ -38,8 +38,8 @@ function les8.shader.create(shader_decl)
   return {id, generation}
 end
 
-function les8.shader.destroy(shader)
+function gfx.shader.destroy(shader)
   c.shader_destroy(shader[1], shader[2])
 end
 
-return les8.shader
+return gfx.shader

@@ -1,10 +1,7 @@
-local vec3 = require("les8.vec3")
-local mat4 = {}
+local vec3 = require("les8.gmath.vec3")
+local deg2rad = require("les8.gmath.util").deg2rad
 
-local function deg2rad(x)
-  -- x * (math.pi / 180.0)
-  return x * 0.017453292519943
-end
+local mat4 = {}
 
 function mat4.identity()
   return {

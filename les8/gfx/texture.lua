@@ -1,8 +1,8 @@
 local c = require("les8.c")
 
-local les8 = {}
+local gfx = {}
 
-les8.texture = {}
+gfx.texture = {}
 
 --[[
 texture_decl = {
@@ -12,7 +12,7 @@ texture_decl = {
 }
 --]]
 
-function les8.texture.create(texture_decl)
+function gfx.texture.create(texture_decl)
   assert(texture_decl.width > 0)
   assert(texture_decl.height > 0)
   assert(#texture_decl.data > 0)
@@ -24,8 +24,8 @@ function les8.texture.create(texture_decl)
   return {id, generation}
 end
 
-function les8.texture.destroy(texture)
+function gfx.texture.destroy(texture)
   c.texture_destroy(texture[1], texture[2])
 end
 
-return les8.texture
+return gfx.texture

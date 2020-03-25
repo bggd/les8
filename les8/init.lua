@@ -2,10 +2,6 @@ local c = require("les8.c")
 
 local les8 = {}
 
-les8.shader = require("les8.shader")
-les8.texture = require("les8.texture")
-les8.gfx = require("les8.gfx")
-
 function les8.init()
   c.init()
 end
