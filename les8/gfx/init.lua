@@ -1,6 +1,6 @@
 local c = require("les8.c")
 
-gfx = {}
+local gfx = {}
 gfx.shader = require("les8.gfx.shader")
 gfx.texture = require("les8.gfx.texture")
 
