@@ -223,6 +223,13 @@ les8c_sdl2_get_keyboard_state(lua_State* L)
   return 1;
 }
 
+static int
+les8c_get_lua_version(lua_State* L)
+{
+  lua_pushinteger(L, LUA_VERSION_NUM);
+  return 1;
+}
+
 extern "C" {
 #ifdef _WIN32
 __declspec(dllexport)
@@ -247,6 +254,7 @@ luaopen_les8_c(lua_State* L)
     {"gfx_draw_triangles", les8c_gfx_draw_triangles},
     {"stbi_load_from_memory", les8c_stbi_load_from_memory},
     {"sdl2_get_keyboard_state", les8c_sdl2_get_keyboard_state},
+    {"get_lua_version", les8c_get_lua_version},
     {NULL, NULL}
   };
 #if LUA_VERSION_NUM < 502

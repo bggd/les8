@@ -16,4 +16,8 @@ function les8.run(fn)
   c.shutdown()
 end
 
+function les8.get_lua_version()
+  return c.get_lua_version()
+end
+
 return les8
